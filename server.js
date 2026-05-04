@@ -51,11 +51,11 @@ function normalizarSolicitacao(body) {
     observacao: typeof body.observacao === 'string' ? body.observacao.trim() : '',
     itens: body.itens.map((item) => ({
       produto: item.produto.trim(),
-      quantidade: Number(item.quantidade)
+      quantidade: Number(item.quantidade),
+      unidade: typeof item.unidade === 'string' ? item.unidade.trim() : ''
     }))
   };
 }
-
 function criarTransporterEmail() {
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -70,7 +70,7 @@ function criarTransporterEmail() {
 
 function montarTextoEmail(solicitacao, dataFormatada) {
   const itensTexto = solicitacao.itens
-    .map((item) => `- ${item.produto}: ${item.quantidade}`)
+    .map((item) => `- ${item.produto}: ${item.quantidade} ${item.unidade}`)
     .join('\n');
 
   return `Nova solicitação recebida
