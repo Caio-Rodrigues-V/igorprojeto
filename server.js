@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const { initDatabase, criarSolicitacao } = require('./database');
 
 const app = express();
@@ -56,17 +56,7 @@ function normalizarSolicitacao(body) {
     }))
   };
 }
-function criarTransporterEmail() {
-  return nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT || 587),
-    secure: String(process.env.EMAIL_SECURE).toLowerCase() === 'true',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-}
+
 
 function montarTextoEmail(solicitacao, dataFormatada) {
   const itensTexto = solicitacao.itens
@@ -91,10 +81,8 @@ Data: ${dataFormatada}`;
 
 async function enviarEmailAdministrador(solicitacao, dataFormatada) {
   const camposEmail = [
-    'EMAIL_HOST',
-    'EMAIL_PORT',
-    'EMAIL_USER',
-    'EMAIL_PASS',
+    'RESEND_API_KEY',
+    'EMAIL_FROM',
     'EMAIL_TO'
   ];
 
@@ -105,12 +93,12 @@ async function enviarEmailAdministrador(solicitacao, dataFormatada) {
     return false;
   }
 
-  const transporter = criarTransporterEmail();
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const texto = montarTextoEmail(solicitacao, dataFormatada);
 
-  await transporter.sendMail({
-    from: `Sistema de Solicitação de Materiais <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_TO,
+  await resend.emails.send({
+    from: `Sistema de Solicitação <${process.env.EMAIL_FROM}>`,
+    to: process.env.EMAIL_TO.split(',').map((email) => email.trim()),
     subject: 'Nova solicitação de materiais recebida',
     text: texto
   });
