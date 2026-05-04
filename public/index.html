@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitação de Materiais</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-conteudo">
+      <span class="marca">Sistema Administrativo</span>
+      <h1>Solicitação de Materiais</h1>
+      <p>Preencha os dados abaixo para registrar uma nova solicitação institucional.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="card-cabecalho">
+        <h2>Nova solicitação</h2>
+        <p>Campos marcados como obrigatórios devem ser preenchidos.</p>
+      </div>
+
+      <form id="form-solicitacao" novalidate>
+        <div class="grid">
+          <div class="campo">
+            <label for="nome">Nome do solicitante *</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: João Silva" required>
+          </div>
+
+          <div class="campo">
+            <label for="setor">Setor *</label>
+            <input type="text" id="setor" name="setor" placeholder="Ex: Administrativo" required>
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone *</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="Ex: (21) 99999-9999" required>
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" placeholder="Ex: nome@empresa.com" required>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="observacao">Observação</label>
+          <textarea id="observacao" name="observacao" rows="4" placeholder="Descreva detalhes adicionais, se necessário."></textarea>
+        </div>
+
+        <div class="secao-itens">
+          <div class="secao-titulo">
+            <div>
+              <h3>Produtos solicitados</h3>
+              <p>Adicione um ou mais produtos à mesma solicitação.</p>
+            </div>
+
+            <button type="button" id="btn-adicionar" class="btn btn-secundario">
+              + Adicionar produto
+            </button>
+          </div>
+
+          <div id="lista-produtos" class="lista-produtos"></div>
+        </div>
+
+        <div id="mensagem" class="mensagem" aria-live="polite"></div>
+
+        <div class="acoes">
+          <button type="submit" id="btn-enviar" class="btn btn-principal">
+            Enviar solicitação
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

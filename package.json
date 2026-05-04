@@ -1,0 +1,26 @@
+{
+  "name": "solicitacao-materiais",
+  "version": "1.0.0",
+  "description": "Sistema web de solicitação de materiais com Node.js, Express, SQLite e Nodemailer.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sqlite",
+    "nodemailer",
+    "solicitacao",
+    "materiais"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemailer": "^6.9.16",
+    "sqlite3": "^5.1.7"
+  }
+}
